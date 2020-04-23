@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class InputData {
@@ -9,13 +10,15 @@ public class InputData {
     private String[] lineData;
     private double[] k1;
     private double[] k2;
-    private boolean t = false;
     private String comtradeName;
     private int numbers;
     private String path;
     private String cfgname = path+comtradeName+".cfg";
     private  String datName = path+comtradeName+".dat";
     private String nameFile;
+    private ArrayList<SampleValues> sv = new ArrayList<SampleValues>();
+    private ArrayList<RMSValues> rms = new ArrayList<RMSValues>();
+    private ArrayList<Fourie> filter = new ArrayList<Fourie>();
 
 
 
@@ -24,21 +27,8 @@ public class InputData {
         this.numbers = numbers;
     }
 
-    private SampleValues sv1 = new SampleValues();
-    private SampleValues sv2 = new SampleValues();
-    private SampleValues sv3 = new SampleValues();
-    private SampleValues sv4 = new SampleValues();
-    private SampleValues sv5 = new SampleValues();
-
-    private RMSValues rms1 = new RMSValues();
-    private RMSValues rms2 = new RMSValues();
-    private RMSValues rms3 = new RMSValues();
-    private RMSValues rms4 = new RMSValues();
-    private RMSValues rms5 = new RMSValues();
 
 
-
-    private Fourie filter = new Fourie(); //фурье
 //    private RMSValues[] rms = new RMSValues[numbers];
     //    private Filter filter = new MiddleValue(); //rms
     private Logic logic = new Logic();
@@ -47,31 +37,23 @@ public class InputData {
 
 
     public  void start() throws FileNotFoundException {
-        SampleValues[] sv = new SampleValues[numbers];
-        sv[0] = sv1;
-        sv[1] = sv2;
-        sv[2] = sv3;
-        sv[3] = sv4;
-        sv[4] = sv5;
 
-        RMSValues[] rms = new RMSValues[numbers];
-        rms[0] = rms1;
-        rms[1] = rms2;
-        rms[2] = rms3;
-        rms[3] = rms4;
-        rms[4] = rms5;
+        for (int i =0;i<numbers;i++){
+            sv.add(new SampleValues());
+            rms.add(new RMSValues());
+            filter.add(new Fourie());
+            filter.get(i).set();
+        }
+
+
 
         comtradeName = nameFile;
         path = "D:\\education\\Algoritms\\Лабораторная работа №2\\ОпытыComtrade\\DPB\\5 sections\\";
-        t = false;
 
         cfgname = path+comtradeName+".cfg";
         datName = path+comtradeName+".dat";
         comtrCfg = new File(cfgname);
         comtrDat = new File(datName);
-        filter.set();
-        filter.setSv(sv); //объект SV помещаем в объект filter,чтобы получать значения
-        filter.setRms(rms); //объект rms помещаем в объект filter,чтобы устанавливать значения
 
         //открываем cfg файл для получения коэф a и b для расчета y = ax+b
         br = new BufferedReader(new FileReader(comtrCfg));
@@ -104,20 +86,26 @@ public class InputData {
                     lineData = line.split(",");
                     int b = 0;
                     for(int i = 0; i < numbers; i++) {
-                        sv[i].setPhA(Double.parseDouble(lineData[b+2]) * k1[b] + k2[b]);
-                        sv[i].setPhB(Double.parseDouble(lineData[b+3]) * k1[b+1] + k2[b+1]);
-                        sv[i].setPhC(Double.parseDouble(lineData[b+4]) * k1[b+2] + k2[b+2]);
-                        Charts.addAnalogData(i, 0, sv[i].getPhA());
-                        Charts.addAnalogData(i, 1, sv[i].getPhB());
-                        Charts.addAnalogData(i, 2, sv[i].getPhC());
+                        sv.get(i).setPhA(Double.parseDouble(lineData[b+2]) * k1[b] + k2[b]);
+                        sv.get(i).setPhB(Double.parseDouble(lineData[b+3]) * k1[b+1] + k2[b+1]);
+                        sv.get(i).setPhC(Double.parseDouble(lineData[b+4]) * k1[b+2] + k2[b+2]);
+                        Charts.addAnalogData(i, 0, sv.get(i).getPhA());
+                        Charts.addAnalogData(i, 1, sv.get(i).getPhB());
+                        Charts.addAnalogData(i, 2, sv.get(i).getPhC());
                         b = b+3;
-                    }
-
-                    filter.calculate();
-                    for(int i = 0; i < numbers; i++) {
-                        Charts.addAnalogData(i+5, 0, rms[i].getPhA());
-                        Charts.addAnalogData(i+5, 1, rms[i].getPhB());
-                        Charts.addAnalogData(i+5, 2, rms[i].getPhC());
+                        filter.get(i).setSv(sv.get(i));                        //объект SV помещаем в объект filter,чтобы получать значения
+                        filter.get(i).setRms(rms.get(i));                         //объект rms помещаем в объект filter,чтобы устанавливать значения
+                        filter.get(i).calculate();
+                        System.out.println("поток = "+i);
+                        System.out.println("Sv фаза А = "+sv.get(i).getPhA());
+                        System.out.println("Sv фаза B = "+sv.get(i).getPhB());
+                        System.out.println("Sv фаза C = "+sv.get(i).getPhC());
+                        System.out.println("Rms фаза А = "+rms.get(i).getPhA());
+                        System.out.println("Rms фаза B = "+rms.get(i).getPhB());
+                        System.out.println("Rms фаза C = "+rms.get(i).getPhC());
+                        Charts.addAnalogData(i+5, 0, rms.get(i).getPhA());
+                        Charts.addAnalogData(i+5, 1, rms.get(i).getPhB());
+                        Charts.addAnalogData(i+5, 2, rms.get(i).getPhC());
                     }
 
                 }
