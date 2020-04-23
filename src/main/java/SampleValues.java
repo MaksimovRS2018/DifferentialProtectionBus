@@ -16,7 +16,6 @@ public class SampleValues {
         if (phasa==3) {
             return getPhC();
         } else {
-            System.out.println("kek");
             return 0;
         }
 

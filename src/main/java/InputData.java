@@ -19,6 +19,7 @@ public class InputData {
     private ArrayList<SampleValues> sv = new ArrayList<SampleValues>();
     private ArrayList<RMSValues> rms = new ArrayList<RMSValues>();
     private ArrayList<Fourie> filter = new ArrayList<Fourie>();
+    private Vector vectors = new Vector();
 
 
 
@@ -41,9 +42,11 @@ public class InputData {
         for (int i =0;i<numbers;i++){
             sv.add(new SampleValues());
             rms.add(new RMSValues());
-            filter.add(new Fourie());
+            filter.add(new Fourie(i));
             filter.get(i).set();
         }
+
+        vectors.setLogic(logic);
 
 
 
@@ -96,13 +99,16 @@ public class InputData {
                         filter.get(i).setSv(sv.get(i));                        //объект SV помещаем в объект filter,чтобы получать значения
                         filter.get(i).setRms(rms.get(i));                         //объект rms помещаем в объект filter,чтобы устанавливать значения
                         filter.get(i).calculate();
-                        System.out.println("поток = "+i);
-                        System.out.println("Sv фаза А = "+sv.get(i).getPhA());
-                        System.out.println("Sv фаза B = "+sv.get(i).getPhB());
-                        System.out.println("Sv фаза C = "+sv.get(i).getPhC());
-                        System.out.println("Rms фаза А = "+rms.get(i).getPhA());
-                        System.out.println("Rms фаза B = "+rms.get(i).getPhB());
-                        System.out.println("Rms фаза C = "+rms.get(i).getPhC());
+//                        ArrayList<double[]> x = new ArrayList<double[]>();
+//                        ArrayList<double[]> y = new ArrayList<double[]>();
+//                        for (int j =0; j<filter.size();j++){
+//                            x.add(filter.get(j).getAk1());
+//                            y.add(filter.get(j).getBk1());
+//                        }
+
+
+
+
                         Charts.addAnalogData(i+5, 0, rms.get(i).getPhA());
                         Charts.addAnalogData(i+5, 1, rms.get(i).getPhB());
                         Charts.addAnalogData(i+5, 2, rms.get(i).getPhC());
