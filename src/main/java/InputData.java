@@ -44,6 +44,7 @@ public class InputData {
             rms.add(new RMSValues());
             filter.add(new Fourie(i));
             filter.get(i).set();
+            filter.get(i).setVector(vectors);
         }
 
         vectors.setLogic(logic);
@@ -99,20 +100,20 @@ public class InputData {
                         filter.get(i).setSv(sv.get(i));                        //объект SV помещаем в объект filter,чтобы получать значения
                         filter.get(i).setRms(rms.get(i));                         //объект rms помещаем в объект filter,чтобы устанавливать значения
                         filter.get(i).calculate();
+                        logic.protect();
 //                        ArrayList<double[]> x = new ArrayList<double[]>();
 //                        ArrayList<double[]> y = new ArrayList<double[]>();
 //                        for (int j =0; j<filter.size();j++){
 //                            x.add(filter.get(j).getAk1());
 //                            y.add(filter.get(j).getBk1());
 //                        }
-
-
-
-
                         Charts.addAnalogData(i+5, 0, rms.get(i).getPhA());
                         Charts.addAnalogData(i+5, 1, rms.get(i).getPhB());
                         Charts.addAnalogData(i+5, 2, rms.get(i).getPhC());
                     }
+                    Charts.addAnalogData(10, 0, logic.getDiffCurrent()[0]);
+                    Charts.addAnalogData(10, 1, logic.getDiffCurrent()[1]);
+                    Charts.addAnalogData(10, 2, logic.getDiffCurrent()[2]);
 
                 }
 

@@ -57,21 +57,6 @@ public class Fourie {
     }
 
 
-    public double[] getAk1() {
-        return Ak1;
-    }
-
-    public void setAk1(double[] ak1) {
-        Ak1 = ak1;
-    }
-    public double[] getBk1() {
-        return Bk1;
-    }
-
-    public void setBk1(double[] bk1) {
-        Bk1 = bk1;
-    }
-
     public void setSv(SampleValues sv) {
         this.sv = sv;
     }

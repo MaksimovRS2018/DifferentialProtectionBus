@@ -3,13 +3,16 @@ import java.util.ArrayList;
 public class Logic {
     private double[] cos = new double[15];
     private double[] sin = new double[15];
-    private ArrayList<Double> diffCurrent = new ArrayList<Double>();
+    private double[] diffCurrent = new double[3];
+
 
 
     public void protect(){
+        Phasa phasa = Phasa.A;
         for (int i = 0; i < 3; i++) {
-            diffCurrent.set(i, getsumm(i*5));
+            diffCurrent[i] = getsumm(i*5);
         }
+
     }
 
     private double getsumm(int phasa) {
@@ -38,5 +41,8 @@ public class Logic {
 
     public void setSin(double[] sin) {
         this.sin = sin;
+    }
+    public double[] getDiffCurrent() {
+        return diffCurrent;
     }
 }
