@@ -19,6 +19,7 @@ public class InputData {
     private ArrayList<SampleValues> sv = new ArrayList<SampleValues>();
     private ArrayList<RMSValues> rms = new ArrayList<RMSValues>();
     private ArrayList<Fourie> filter = new ArrayList<Fourie>();
+    private ArrayList<OutputData> od = new ArrayList<OutputData>();
     private Vector vectors = new Vector();
 
 
@@ -33,7 +34,7 @@ public class InputData {
 //    private RMSValues[] rms = new RMSValues[numbers];
     //    private Filter filter = new MiddleValue(); //rms
     private Logic logic = new Logic();
-    private OutputData od = new OutputData();
+
 
 
 
@@ -45,9 +46,12 @@ public class InputData {
             filter.add(new Fourie(i));
             filter.get(i).set();
             filter.get(i).setVector(vectors);
+            od.add(new OutputData());
         }
 
-        vectors.setLogic(logic);
+        logic.setVectors(vectors);
+        logic.setBlkSecondHarmonic(0.15);
+        logic.setOd(od);
 
 
 
@@ -100,7 +104,7 @@ public class InputData {
                         filter.get(i).setSv(sv.get(i));                        //объект SV помещаем в объект filter,чтобы получать значения
                         filter.get(i).setRms(rms.get(i));                         //объект rms помещаем в объект filter,чтобы устанавливать значения
                         filter.get(i).calculate();
-                        logic.protect();
+                        logic.setVectors();
 //                        ArrayList<double[]> x = new ArrayList<double[]>();
 //                        ArrayList<double[]> y = new ArrayList<double[]>();
 //                        for (int j =0; j<filter.size();j++){

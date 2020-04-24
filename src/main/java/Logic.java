@@ -1,21 +1,35 @@
 import java.util.ArrayList;
 
 public class Logic {
-    private double[] cos = new double[15];
-    private double[] sin = new double[15];
     private double[] diffCurrent = new double[3];
+    private double[] blkdiff = new double[3];
+    private double blkSecondHarmonic;
+    private Vector vectors;
+    private ArrayList<OutputData> od;
+    private double beginingDiffCurrent; //Id0
+    private double beginingBrakeCurrent; //It0
+    private double brakeCurrent; //It
+    private double coefBrake; //kt
 
 
-
-    public void protect(){
-        Phasa phasa = Phasa.A;
+    public void setVectors(){
         for (int i = 0; i < 3; i++) {
-            diffCurrent[i] = getsumm(i*5);
+            diffCurrent[i] = getsumm(i*5,vectors.getCosFirst(),vectors.getSinSecond());
+            blkdiff[i] = getsumm(i*5,vectors.getCosFirst(),vectors.getSinSecond());
         }
+        protect();
 
     }
 
-    private double getsumm(int phasa) {
+    private void protect(){
+        for (int i = 0; i < 3; i++) {
+            if ((diffCurrent[i] > beginingDiffCurrent) | (diffCurrent[i]/blkdiff[i] > blkSecondHarmonic)){
+                od.forEach(e->e.setTripper(true));
+            }
+        }
+    }
+
+    private double getsumm(int phasa, double[] cos, double[] sin) {
         double summX = 0.;
         double summY = 0.;
         double resultCurrent = 0;
@@ -27,22 +41,24 @@ public class Logic {
         return resultCurrent;
     }
 
-    public double[] getCos() {
-        return cos;
-    }
 
-    public void setCos(double[] cos) {
-        this.cos = cos;
-    }
-
-    public double[] getSin() {
-        return sin;
-    }
-
-    public void setSin(double[] sin) {
-        this.sin = sin;
-    }
     public double[] getDiffCurrent() {
         return diffCurrent;
+    }
+
+    public Vector getVectors() {
+        return vectors;
+    }
+
+    public void setVectors(Vector vectors) {
+        this.vectors = vectors;
+    }
+
+    public void setBlkSecondHarmonic(double blkSecondHarmonic) {
+        this.blkSecondHarmonic = blkSecondHarmonic;
+    }
+
+    public void setOd(ArrayList<OutputData> od) {
+        this.od = od;
     }
 }
