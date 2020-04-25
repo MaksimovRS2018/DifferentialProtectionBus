@@ -21,6 +21,8 @@ public class InputData {
     private ArrayList<Fourie> filter = new ArrayList<Fourie>();
     private ArrayList<OutputData> od = new ArrayList<OutputData>();
     private Vector vectors = new Vector();
+    private boolean t = true;
+    private Logic logic = new Logic();
 
 
 
@@ -28,15 +30,6 @@ public class InputData {
         this.nameFile = nameFile;
         this.numbers = numbers;
     }
-
-
-
-//    private RMSValues[] rms = new RMSValues[numbers];
-    //    private Filter filter = new MiddleValue(); //rms
-    private Logic logic = new Logic();
-
-
-
 
     public  void start() throws FileNotFoundException {
 
@@ -48,16 +41,42 @@ public class InputData {
             filter.get(i).setVector(vectors);
             od.add(new OutputData());
         }
+        try {
+
+         Charts chartss = new Charts("Токи");
+         Charts chartsDiscrete = new Charts("Дискретные сигналы");
+
+        String fun;
+        for(int i = 0; i < 11; i++) {
+            if (i < 5) {
+                fun = "Мг. зн." +(i+1); //"Мгн. значение " +i+"-ого фидера"
+            } else if (i < 10){
+                fun = "Д. зн. " +(i-4); //"Действ. значение " +i+"-ого фидера"
+            } else {
+                fun = "Диф. ток";
+            }
+            chartss.createAnalogChart(fun,i);
+            chartss.addSeries("Фаза А", i, 0);
+            chartss.addSeries("Фаза B", i, 1);
+            chartss.addSeries("Фаза С", i, 2);
+        }
+
+        for (int i = 0; i < numbers; i++) {
+            chartsDiscrete.createAnalogChart("Trip" + (i+1),i);
+            chartsDiscrete.addSeries("Trip" + (i+1), i, 0);
+            chartsDiscrete.addSeries("Str" + (i+1), i, 1);
+        }
+        chartsDiscrete.createAnalogChart("Blk" ,numbers);
+        chartsDiscrete.addSeries("Blk", numbers, 0);
 
         logic.setVectors(vectors);
         logic.setBlkSecondHarmonic(0.15);
         logic.setOd(od);
-
+        logic.setBeginingDiffCurrent(0.9);
 
 
         comtradeName = nameFile;
         path = "D:\\education\\Algoritms\\Лабораторная работа №2\\ОпытыComtrade\\DPB\\5 sections\\";
-
         cfgname = path+comtradeName+".cfg";
         datName = path+comtradeName+".dat";
         comtrCfg = new File(cfgname);
@@ -84,51 +103,73 @@ public class InputData {
                     count++;
                 };
             }
-            System.out.println(Arrays.toString(k1));
             count =0;
-//            открываем data файл для получения значений
             br = new BufferedReader(new FileReader(comtrDat));
             while ((line=br.readLine())!=null) {
                 count++;
                 if ((count > 100 && count < 1200)) {
+
                     lineData = line.split(",");
                     int b = 0;
-                    for(int i = 0; i < numbers; i++) {
-                        sv.get(i).setPhA(Double.parseDouble(lineData[b+2]) * k1[b] + k2[b]);
-                        sv.get(i).setPhB(Double.parseDouble(lineData[b+3]) * k1[b+1] + k2[b+1]);
-                        sv.get(i).setPhC(Double.parseDouble(lineData[b+4]) * k1[b+2] + k2[b+2]);
-                        Charts.addAnalogData(i, 0, sv.get(i).getPhA());
-                        Charts.addAnalogData(i, 1, sv.get(i).getPhB());
-                        Charts.addAnalogData(i, 2, sv.get(i).getPhC());
-                        b = b+3;
-                        filter.get(i).setSv(sv.get(i));                        //объект SV помещаем в объект filter,чтобы получать значения
-                        filter.get(i).setRms(rms.get(i));                         //объект rms помещаем в объект filter,чтобы устанавливать значения
-                        filter.get(i).calculate();
-                        logic.setVectors();
-//                        ArrayList<double[]> x = new ArrayList<double[]>();
-//                        ArrayList<double[]> y = new ArrayList<double[]>();
-//                        for (int j =0; j<filter.size();j++){
-//                            x.add(filter.get(j).getAk1());
-//                            y.add(filter.get(j).getBk1());
-//                        }
-                        Charts.addAnalogData(i+5, 0, rms.get(i).getPhA());
-                        Charts.addAnalogData(i+5, 1, rms.get(i).getPhB());
-                        Charts.addAnalogData(i+5, 2, rms.get(i).getPhC());
+                    int i = 0;
+                    while (i < numbers ) { //проходимся по всем фидерам
+                        if (t) {
+                            sv.get(i).setPhA(Double.parseDouble(lineData[b + 2]) * k1[b] + k2[b]);
+                            sv.get(i).setPhB(Double.parseDouble(lineData[b + 3]) * k1[b + 1] + k2[b + 1]);
+                            sv.get(i).setPhC(Double.parseDouble(lineData[b + 4]) * k1[b + 2] + k2[b + 2]);
+                            chartss.addAnalogData(i, 0, sv.get(i).getPhA());
+                            chartss.addAnalogData(i, 1, sv.get(i).getPhB());
+                            chartss.addAnalogData(i, 2, sv.get(i).getPhC());
+                            b = b + 3; //чтобы прыгать через фазы для следующего фидера
+                            filter.get(i).setSv(sv.get(i));//объект SV помещаем в объект filter,чтобы получать значения
+                            filter.get(i).setRms(rms.get(i));//объект rms помещаем в объект filter,чтобы устанавливать значения
+                            filter.get(i).calculate(); //расчет ортогональных составляющих
+                            chartss.addAnalogData(i + 5, 0, rms.get(i).getPhA());
+                            chartss.addAnalogData(i + 5, 1, rms.get(i).getPhB());
+                            chartss.addAnalogData(i + 5, 2, rms.get(i).getPhC());
+                        } else {
+                            //имитация отключения
+                            chartss.addAnalogData(i, 0, 0.);
+                            chartss.addAnalogData(i, 1, 0.);
+                            chartss.addAnalogData(i, 2, 0.);
+                            chartss.addAnalogData(i + 5, 0, 0.);
+                            chartss.addAnalogData(i + 5, 1, 0.);
+                            chartss.addAnalogData(i + 5, 2, 0.);
+
+                        }
+                        //сигнал срабатывания защиты
+                        chartsDiscrete.addAnalogData(i, 0, boolToInt(od.get(i).getTripper()));
+                        //сигнал пуска защиты
+                        chartsDiscrete.addAnalogData(i, 1, boolToInt(od.get(i).getStr()));
+                        i++;
                     }
-                    Charts.addAnalogData(10, 0, logic.getDiffCurrent()[0]);
-                    Charts.addAnalogData(10, 1, logic.getDiffCurrent()[1]);
-                    Charts.addAnalogData(10, 2, logic.getDiffCurrent()[2]);
 
+                    //отсылка векторов в логику
+                    logic.setVectors();
+                    //отключение (прекращение цикла(для имитация отключение), так как произошла срабатывание)
+                    t = t & (!od.get(0).getTripper());
+                    //диф ток пофазно
+                    chartss.addAnalogData(2*numbers, 0, logic.getDiffCurrent()[0]);
+                    chartss.addAnalogData(2*numbers, 1, logic.getDiffCurrent()[0]);
+                    chartss.addAnalogData(2*numbers, 2, logic.getDiffCurrent()[0]);
+                    //сигнал блокировки
+                    chartsDiscrete.addAnalogData(5, 0, boolToInt(logic.isBlock_2harmonic()));
                 }
-
-
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
     }
+
+    public static int boolToInt(boolean b) {
+        return Boolean.compare(b, false);
+    }
+
 
 
 }

@@ -2,14 +2,10 @@ public class SampleValues {
     private double phA;
     private double phB;
     private double phC;
-    private double time;
-    //alt+insert
 
     public double get(int phasa){
-
-        if (phasa==1) {
+        if (phasa==1)
             return  getPhA();
-        }
         if (phasa==2) {
             return getPhB();
         }
@@ -18,7 +14,6 @@ public class SampleValues {
         } else {
             return 0;
         }
-
 
     }
 
@@ -44,14 +39,5 @@ public class SampleValues {
 
     public void setPhC(double phC) {
         this.phC = phC;
-    }
-
-
-    public double getTime() {
-        return time;
-    }
-
-    public void setTime(double time) {
-        this.time = time;
     }
 }

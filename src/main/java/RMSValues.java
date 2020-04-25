@@ -2,7 +2,6 @@ public class RMSValues {
     private double phA;
     private double phB;
     private double phC;
-    private double time;
 
     public void set(int phasa, double value){
 
@@ -34,14 +33,5 @@ public class RMSValues {
 
     public void setPhC(double phC) {
         this.phC = phC;
-    }
-
-
-    public double getTime() {
-        return time;
-    }
-
-    public void setTime(double time) {
-        this.time = time;
     }
 }

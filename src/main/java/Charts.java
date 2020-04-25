@@ -12,27 +12,26 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 public class Charts {
+    private  ArrayList<XYSeriesCollection> datasetsAnalog = new ArrayList<XYSeriesCollection>();
+    private  ArrayList<XYSeries> datasetsDiscret = new ArrayList<XYSeries>();
+    private  CombinedDomainXYPlot plot;
+    private  JFreeChart chart;
+    private  JFrame frame;
+    private  XYSeries tempSeries;
+    private  double timeStep = 0.001; // шаг дискретизации при 20 т. за период
+    private  double currentTime = 0.0;
+    private  boolean lastData=false;
+    private String nameGraph;
 
-    private static Charts charts;
-    private static ArrayList<XYSeriesCollection> datasetsAnalog = new ArrayList<XYSeriesCollection>();
-    private static ArrayList<XYSeries> datasetsDiscrete = new ArrayList<XYSeries>();
-    private static CombinedDomainXYPlot plot;
-    private static JFreeChart chart;
-    private static JFrame frame;
-    private static XYSeries tempSeries;
-    private static double timeStep = 0.00025; // шаг дискретизации при 80 т. за период
-    private static double currentTime = 0.0;
-    private static boolean lastData=false;
-
-    public Charts(){
+    public Charts(String name){
+//        this.nameGraph = name;
         plot = new CombinedDomainXYPlot(new NumberAxis("Время, сек"));
-
-        chart = new JFreeChart("Сигналы защиты", plot);
+        chart = new JFreeChart(name, plot);
         chart.setBorderPaint(Color.white);
         chart.setBorderVisible(true);
         chart.setBackgroundPaint(Color.white);
 
-        frame = new JFrame("Сигналы защиты");
+        frame = new JFrame(name);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(new ChartPanel(chart));
         frame.setSize(1024,768);
@@ -44,11 +43,12 @@ public class Charts {
      * @param name - имя графика
      * @param number - порядковый номер сигнала
      */
-    public static void createAnalogChart(String name, int number){
-        if(charts==null) charts = new Charts();
+    public  void createAnalogChart(String name, int number){
+//        if(charts==null) charts = new Charts(nameGraph);
 
         XYSeriesCollection dataset = new XYSeriesCollection();
-        NumberAxis rangeAxis = new NumberAxis(name); rangeAxis.setAutoRangeIncludesZero(false);
+        NumberAxis rangeAxis = new NumberAxis(name);
+        rangeAxis.setAutoRangeIncludesZero(false);
         XYPlot subplot = new XYPlot(dataset, null, rangeAxis, new StandardXYItemRenderer() );
         subplot.setBackgroundPaint(Color.WHITE);
         plot.add(subplot);
@@ -61,18 +61,19 @@ public class Charts {
      * @param name - имя графика
      * @param number - порядковый номер сигнала
      */
-    public static void createDiscreteChart(String name, int number){
-        if(charts==null) charts = new Charts();
+    public  void createDiscreteChart(String name, int number){
+//        if(charts==null) charts = new Charts(nameGraph);
         XYSeriesCollection dataset = new XYSeriesCollection();
         NumberAxis rangeAxis = new NumberAxis(name);
         rangeAxis.setAutoRangeIncludesZero(false);
-        XYPlot subplot = new XYPlot(dataset, null, rangeAxis, new StandardXYItemRenderer() );
+        XYPlot subplot = new XYPlot(dataset, null, rangeAxis, new StandardXYItemRenderer());
+        subplot.setBackgroundPaint(Color.WHITE);
         plot.add(subplot);
-        subplot.setWeight(1);
+        subplot.setWeight(7);
         XYStepAreaRenderer xysteparearenderer = new XYStepAreaRenderer(2);
         subplot.setRenderer(xysteparearenderer);
         XYSeries series = new XYSeries(name);
-        datasetsDiscrete.add(series);
+        datasetsDiscret.add(series);
         dataset.addSeries(series);
     }
 
@@ -83,7 +84,7 @@ public class Charts {
      * @param chartNumber - îðßäêîâûé íîìåð ñèãíàëà
      * @param number - îðßäêîâûé íîìåð
      */
-    public static void addSeries(String name, int chartNumber, int number){
+    public  void addSeries(String name, int chartNumber, int number){
         XYSeries series = new XYSeries(name); series.add(0.0, 0.0);
         datasetsAnalog.get(chartNumber).addSeries(series);
     }
@@ -94,7 +95,7 @@ public class Charts {
      * @param series - îðßäêîâûé íîìåð ñèãíàëà
      * @param data - îáàâëßåìîå çíà÷åíèå (double)
      */
-    public static void addAnalogData(int chart, int series, double data){
+    public  void addAnalogData(int chart, int series, double data){
         tempSeries = (XYSeries) datasetsAnalog.get(chart).getSeries().get(series);
         currentTime = tempSeries.getMaxX()+timeStep;
         tempSeries.add(currentTime, data);
@@ -107,7 +108,7 @@ public class Charts {
      * @param data - îáàâëßåìîå çíà÷åíèå (double)
      * @param timeStep - øàã ïî âðåìåíè
      */
-    public static void addAnalogData(int chart, int series, double data, double timeStep){
+    public  void addAnalogData(int chart, int series, double data, double timeStep){
         tempSeries = (XYSeries) datasetsAnalog.get(chart).getSeries().get(series);
         currentTime = tempSeries.getMaxX()+timeStep;
         tempSeries.add(currentTime, data);
@@ -118,12 +119,13 @@ public class Charts {
      * @param chart - îðßäêîâûé íîìåð äèñðåòíîãî ñèãíàëà
      * @param data - îáàâëßåìûé çíà÷åíèå (true/false)
      */
-    public static void addDiscreteData(int chart, boolean data){
-        tempSeries = (XYSeries) datasetsDiscrete.get(chart);
+    public  void addDiscreteData(int chart, boolean data){
+        tempSeries = (XYSeries) datasetsDiscret.get(chart);
+        currentTime = tempSeries.getMaxX()+timeStep;
         if(!tempSeries.isEmpty()) lastData = tempSeries.getY(tempSeries.getItemCount()-1).doubleValue()==1;
         if(!lastData && data) tempSeries.add(currentTime, data?1:0);
         if(lastData && !data) tempSeries.add(currentTime, data?1:0);
-        tempSeries.add(currentTime, data?1:0);
+//        tempSeries.add(currentTime, data?1:0);
     }
 
 

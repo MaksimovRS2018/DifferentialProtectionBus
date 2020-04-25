@@ -43,7 +43,7 @@ public class Fourie {
                 //расчет действующего значения для 1 гармоники по cos и sin составляющей
                 double Ck1 = Math.sqrt((Math.pow(Ak1[i], 2) + Math.pow(Bk1[i], 2)) / 2);
                 double x = Math.sqrt(Math.pow(Ck1, 2) + Math.pow(A0[i], 2));
-                System.out.println("Действубщее значение "+(number+1)+"-ого Фурье = "+x +" фаза = "+(i+1));
+//                System.out.println("Действубщее значение "+(number+1)+"-ого Фурье = "+x +" фаза = "+(i+1));
                 //суммарная составляющая
                 actual_buf[count]=sv.get(i+1);
                 buff.set(i, actual_buf);

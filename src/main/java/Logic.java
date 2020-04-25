@@ -10,23 +10,53 @@ public class Logic {
     private double beginingBrakeCurrent; //It0
     private double brakeCurrent; //It
     private double coefBrake; //kt
-
+    private boolean block_2harmonic = false;
+    private double time;
+    private  double timeStep = 0.001;
+    private double setTime = 0.04;
 
     public void setVectors(){
         for (int i = 0; i < 3; i++) {
             diffCurrent[i] = getsumm(i*5,vectors.getCosFirst(),vectors.getSinSecond());
-            blkdiff[i] = getsumm(i*5,vectors.getCosFirst(),vectors.getSinSecond());
+            blkdiff[i] = getsumm(i*5,vectors.getCosSecond(),vectors.getSinSecond());
         }
         protect();
 
     }
 
     private void protect(){
+        boolean blk = false;
+        boolean trip = false;
         for (int i = 0; i < 3; i++) {
-            if ((diffCurrent[i] > beginingDiffCurrent) | (diffCurrent[i]/blkdiff[i] > blkSecondHarmonic)){
-                od.forEach(e->e.setTripper(true));
+            blk = blk | blocking(blkdiff[i]/diffCurrent[i]);
+            if (diffCurrent[i] > beginingDiffCurrent) {
+                od.forEach(e->e.setStr(true));
+                block_2harmonic = blk;
+                if (blk) {
+                    System.out.println(blkdiff[i]+ " 2 harmonic");
+                    System.out.println(diffCurrent[i]+ " 1 harmonic");
+                    System.out.println(blkdiff[i]/diffCurrent[i]+ "not blocking");
+                    trip = true;
+                } else {
+                        System.out.println(blkdiff[i]+ " --------------2 harmonic");
+                        System.out.println(diffCurrent[i]+ "------------ 1 harmonic");
+                        System.out.println(blkdiff[i]/diffCurrent[i]+ "--------------------------blocking");
+                }
             }
         }
+        if (trip) {
+            time = time + timeStep;
+            if (time > setTime) {
+                od.forEach(e -> e.setTripper(true));
+                time = 0;
+            }
+        }
+
+
+    }
+    private boolean blocking(double relation){
+        boolean blk = (relation < blkSecondHarmonic);
+        return blk;
     }
 
     private double getsumm(int phasa, double[] cos, double[] sin) {
@@ -46,10 +76,6 @@ public class Logic {
         return diffCurrent;
     }
 
-    public Vector getVectors() {
-        return vectors;
-    }
-
     public void setVectors(Vector vectors) {
         this.vectors = vectors;
     }
@@ -60,5 +86,25 @@ public class Logic {
 
     public void setOd(ArrayList<OutputData> od) {
         this.od = od;
+    }
+
+    public void setBeginingDiffCurrent(double beginingDiffCurrent) {
+        this.beginingDiffCurrent = beginingDiffCurrent;
+    }
+
+    public void setBeginingBrakeCurrent(double beginingBrakeCurrent) {
+        this.beginingBrakeCurrent = beginingBrakeCurrent;
+    }
+
+    public void setBrakeCurrent(double brakeCurrent) {
+        this.brakeCurrent = brakeCurrent;
+    }
+
+    public void setCoefBrake(double coefBrake) {
+        this.coefBrake = coefBrake;
+    }
+
+    public boolean isBlock_2harmonic() {
+        return block_2harmonic;
     }
 }
