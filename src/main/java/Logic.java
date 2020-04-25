@@ -14,10 +14,11 @@ public class Logic {
     private double[] currentDrag = new double[3];
     private double timeStep = 0.001;
     private double setTime = 0.02;
+    private boolean go;
 
     public void setVectors() {
         for (int i = 0; i < 3; i++) {
-            diffCurrent[i] = getsumm(i * 5, vectors.getCosFirst(), vectors.getSinSecond());
+            diffCurrent[i] = getsumm(i * 5, vectors.getCosFirst(), vectors.getSinFirst());
             blkdiff[i] = getsumm(i * 5, vectors.getCosSecond(), vectors.getSinSecond());
         }
         protect();
@@ -30,10 +31,12 @@ public class Logic {
         for (int i = 0; i < 3; i++) {
             blk = blk | blocking(blkdiff[i] / diffCurrent[i]);
             //It
-            currentDrag[i] = getCurrentDrag(i * 5, vectors.getCosFirst(), vectors.getSinSecond());
+            currentDrag[i] = getCurrentDrag(i * 5, vectors.getCosFirst(), vectors.getSinFirst());
             if (diffCurrent[i] > coefDrag * (currentDrag[i] - beginingDragCurrent) + beginingDiffCurrent) {
-                od.forEach(e -> e.setStr(true));
+
                 if (blk) {
+                    od.forEach(e -> e.setStr(true));
+                    block_2harmonic = blk;
                     System.out.println(blkdiff[i] + " 2 harmonic");
                     System.out.println(diffCurrent[i] + " 1 harmonic");
                     System.out.println(blkdiff[i] / diffCurrent[i] + " not blocking");
@@ -45,7 +48,7 @@ public class Logic {
                 }
             }
         }
-        block_2harmonic = blk;
+
         if (trip) {
             time = time + timeStep;
             if (time > setTime) {
@@ -58,8 +61,7 @@ public class Logic {
     }
 
     private boolean blocking(double relation) {
-        boolean blk = (relation < blkSecondHarmonic);
-        return blk;
+        return (relation < blkSecondHarmonic);
     }
 
     private double getsumm(int phasa, double[] Icos, double[] Isin) {

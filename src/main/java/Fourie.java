@@ -15,6 +15,7 @@ public class Fourie {
     private RMSValues rms;
     private Vector vector;
     private int number;
+    private int period = 20; //количество точек за период
 
     public void set(){
         buff.add(bufferPhA);
@@ -27,7 +28,6 @@ public class Fourie {
 
 
     public void calculate() {
-        int period = 20; //количество точек за период
         for (int i = 0; i < 3; i++) { //3 - 3 phases
                 double[] actual_buf = buff.get(i);
                 double sumPh = sv.get(i+1) - actual_buf[count];
@@ -75,5 +75,11 @@ public class Fourie {
     public void setVector(Vector vector) {
         this.vector = vector;
     }
+
+    public void setPeriod(int period) {
+        this.period = period;
+    }
+
 }
+
 

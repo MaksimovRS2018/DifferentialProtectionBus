@@ -81,6 +81,10 @@ public class Charts {
         tempSeries.add(currentTime, data);
     }
 
+    public void setTimeStep(double timeStep) {
+        this.timeStep = timeStep;
+    }
+
 
 
 }

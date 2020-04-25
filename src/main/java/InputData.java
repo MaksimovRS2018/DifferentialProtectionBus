@@ -28,20 +28,24 @@ public class InputData {
     }
 
     public void start() throws FileNotFoundException {
-
+        int period = 20; // millisec
+        double step = 0.001;
         for (int i = 0; i < numbers; i++) {
             sv.add(new SampleValues());
             rms.add(new RMSValues());
             filter.add(new Fourie(i));
             filter.get(i).set();
             filter.get(i).setVector(vectors);
+            filter.get(i).setPeriod(period);
             od.add(new OutputData());
         }
         try {
             //объект класса Charts для построения графика токов в отдельном окне
             Charts chartss = new Charts("Токи");
+            chartss.setTimeStep(step);
             //объект класса Charts для построения графика дискретных значений в отдельном окне
             Charts chartsDiscrete = new Charts("Дискретные сигналы");
+            chartsDiscrete.setTimeStep(step);
             //генерируем серии для токов
             String fun;
             for (int i = 0; i < 2*numbers+2; i++) {
@@ -75,6 +79,7 @@ public class InputData {
             logic.setBeginingDiffCurrent(1.082);
             logic.setCoefDrag(0.6);
             logic.setBeginingDragCurrent(0.9);
+            logic.setSetTime(0.04);
 
             //путь к файлам comtrade
             comtradeName = nameFile;
@@ -110,7 +115,6 @@ public class InputData {
                 while ((line = br.readLine()) != null) {
                     count++;
                     if ((count > 100 && count < 1200)) {
-
                         lineData = line.split(",");
                         int b = 0;
                         int i = 0;
@@ -134,19 +138,21 @@ public class InputData {
                             chartss.addAnalogData(i + 5, 0, rms.get(i).getPhA());
                             chartss.addAnalogData(i + 5, 1, rms.get(i).getPhB());
                             chartss.addAnalogData(i + 5, 2, rms.get(i).getPhC());
-                            System.out.println("ФАЗА А = " + rms.get(i).getPhA());
-                            System.out.println("ФАЗА В = " + rms.get(i).getPhB());
-                            System.out.println("ФАЗА С = " + rms.get(i).getPhC());
-                            //сигнал срабатывания защиты
-                            chartsDiscrete.addAnalogData(i, 0, boolToInt(od.get(i).getTripper()));
-                            //сигнал пуска защиты
-                            chartsDiscrete.addAnalogData(i, 1, boolToInt(od.get(i).getStr()));
+//                            System.out.println("ФАЗА А = " + rms.get(i).getPhA());
+//                            System.out.println("ФАЗА В = " + rms.get(i).getPhB());
+//                            System.out.println("ФАЗА С = " + rms.get(i).getPhC());
                             i++;
                         }
 
                         //отсылка векторов в логику
                         logic.setVectors();
-                        //отключение (прекращение цикла(для имитация отключение), так как произошла срабатывание)
+                        for (int j = 0; j < numbers;j++) {
+                            //сигнал срабатывания защиты
+                            chartsDiscrete.addAnalogData(j, 0, boolToInt(od.get(j).getTripper()));
+                            //сигнал пуска защиты
+                            chartsDiscrete.addAnalogData(j, 1, boolToInt(od.get(j).getStr()));
+                        }
+                        //отключение (прекращение цикла(для имитации отключения), так как произошло срабатывание)
                         t = t & (!od.get(0).getTripper());
                         //диф ток пофазно
                         chartss.addAnalogData(2 * numbers, 0, logic.getDiffCurrent()[0]);
