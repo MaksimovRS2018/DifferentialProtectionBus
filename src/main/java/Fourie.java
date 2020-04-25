@@ -27,11 +27,11 @@ public class Fourie {
 
 
     public void calculate() {
-            int period = 20; //количество точек за период
-            for (int i = 0; i < 3; i++) { //3 - 3 phases
+        int period = 20; //количество точек за период
+        for (int i = 0; i < 3; i++) { //3 - 3 phases
                 double[] actual_buf = buff.get(i);
                 double sumPh = sv.get(i+1) - actual_buf[count];
-                //Алгоритм фурье постоянная составляющая + 1 гармоника
+                //Алгоритм фурье: постоянная составляющая + 1 гармоника
                 //расчет постоянной составляющей, возникает при КЗ. В норм. режиме равна нулю -> интеграл синусоиды = 0
                 A0[i] = A0[i] + sumPh / period;
                 //расчет cos и sin составляющей для первой гармоники
@@ -58,9 +58,6 @@ public class Fourie {
             vector.getVectorsFirstAndSecondHarmonic(Ak1,Bk1,Ak2,Bk2,number);
 
     }
-
-
-
 
 
     public void setSv(SampleValues sv) {

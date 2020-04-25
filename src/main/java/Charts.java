@@ -13,18 +13,14 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class Charts {
     private  ArrayList<XYSeriesCollection> datasetsAnalog = new ArrayList<XYSeriesCollection>();
-    private  ArrayList<XYSeries> datasetsDiscret = new ArrayList<XYSeries>();
     private  CombinedDomainXYPlot plot;
     private  JFreeChart chart;
     private  JFrame frame;
     private  XYSeries tempSeries;
     private  double timeStep = 0.001; // шаг дискретизации при 20 т. за период
     private  double currentTime = 0.0;
-    private  boolean lastData=false;
-    private String nameGraph;
 
     public Charts(String name){
-//        this.nameGraph = name;
         plot = new CombinedDomainXYPlot(new NumberAxis("Время, сек"));
         chart = new JFreeChart(name, plot);
         chart.setBorderPaint(Color.white);
@@ -61,22 +57,6 @@ public class Charts {
      * @param name - имя графика
      * @param number - порядковый номер сигнала
      */
-    public  void createDiscreteChart(String name, int number){
-//        if(charts==null) charts = new Charts(nameGraph);
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        NumberAxis rangeAxis = new NumberAxis(name);
-        rangeAxis.setAutoRangeIncludesZero(false);
-        XYPlot subplot = new XYPlot(dataset, null, rangeAxis, new StandardXYItemRenderer());
-        subplot.setBackgroundPaint(Color.WHITE);
-        plot.add(subplot);
-        subplot.setWeight(7);
-        XYStepAreaRenderer xysteparearenderer = new XYStepAreaRenderer(2);
-        subplot.setRenderer(xysteparearenderer);
-        XYSeries series = new XYSeries(name);
-        datasetsDiscret.add(series);
-        dataset.addSeries(series);
-    }
-
 
     /**
      * îáàâëßåò â óêàçàííûé àíàëîãîâûé ãðàôèê íîâûé ñèãíàë
@@ -101,32 +81,6 @@ public class Charts {
         tempSeries.add(currentTime, data);
     }
 
-    /**
-     * òðîèò íàëîãîâûé ñèãíàë íà ãðàôèêå
-     * @param chart - îðßäêîâûé íîìåð ãðàôèêà
-     * @param series - îðßäêîâûé íîìåð ñèãíàëà
-     * @param data - îáàâëßåìîå çíà÷åíèå (double)
-     * @param timeStep - øàã ïî âðåìåíè
-     */
-    public  void addAnalogData(int chart, int series, double data, double timeStep){
-        tempSeries = (XYSeries) datasetsAnalog.get(chart).getSeries().get(series);
-        currentTime = tempSeries.getMaxX()+timeStep;
-        tempSeries.add(currentTime, data);
-    }
-
-    /**
-     * òðîèò èñêðåòíûé ñèãíàë íà ãðàôèêå
-     * @param chart - îðßäêîâûé íîìåð äèñðåòíîãî ñèãíàëà
-     * @param data - îáàâëßåìûé çíà÷åíèå (true/false)
-     */
-    public  void addDiscreteData(int chart, boolean data){
-        tempSeries = (XYSeries) datasetsDiscret.get(chart);
-        currentTime = tempSeries.getMaxX()+timeStep;
-        if(!tempSeries.isEmpty()) lastData = tempSeries.getY(tempSeries.getItemCount()-1).doubleValue()==1;
-        if(!lastData && data) tempSeries.add(currentTime, data?1:0);
-        if(lastData && !data) tempSeries.add(currentTime, data?1:0);
-//        tempSeries.add(currentTime, data?1:0);
-    }
 
 
 }
