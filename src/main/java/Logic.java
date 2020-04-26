@@ -24,20 +24,26 @@ public class Logic {
     }
 
     private void protect() {
+        boolean str = false;
+        boolean blk = false;
+        boolean trip = false;
         for (int i = 0; i < 3; i++) {
             //It
             currentDrag[i] = getCurrentDrag(i * 5, vectors.getCosFirst(), vectors.getSinFirst());
             if (diffCurrent[i] > coefDrag * (currentDrag[i] - beginingDragCurrent) + beginingDiffCurrent) {
-                od.setStr(true);
+                str = str | true;
                 //проверка на блокировку по 2 гармонике
                 if (blocking(blkdiff[i] / diffCurrent[i])) {
-                    od.setBlk(false);
-                    od.setTripper(true);
+                    blk = false;
+                    trip = trip | true;
                 } else {
-                    od.setBlk(true);
+                    blk = blk | true;
                 }
             }
         }
+        od.setBlk(blk);
+        od.setTripper(trip);
+        od.setStr(str);
         //прием дискретных сигналов от логики
         od.takeDiscreteSignals();
 
