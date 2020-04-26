@@ -16,7 +16,7 @@ public class Logic {
             //диф ток по 1 гармонике
             diffCurrent[i] = getsumm(i * 5, vectors.getCosFirst(), vectors.getSinFirst());
             //диф ток по 2 гармонике, для блокировки
-            blkdiff[i] = getsumm(i * 5, vectors.getCosSecond(), vectors.getSinSecond());
+            blkdiff[i] = getCurrentDrag(i * 5, vectors.getCosSecond(), vectors.getSinSecond());
         }
         //запуск логики
         protect();
