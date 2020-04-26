@@ -29,8 +29,9 @@ public class Logic {
         boolean trip = false;
         for (int i = 0; i < 3; i++) {
             //It
-            currentDrag[i] = getCurrentDrag(i * 5, vectors.getCosFirst(), vectors.getSinFirst());
-            if (diffCurrent[i] > coefDrag * (currentDrag[i] - beginingDragCurrent) + beginingDiffCurrent) {
+            currentDrag[i] = coefDrag * (getCurrentDrag(i * 5, vectors.getCosFirst(), vectors.getSinFirst())
+                    - beginingDragCurrent) + beginingDiffCurrent;
+            if (diffCurrent[i] > currentDrag[i]) {
                 str = str | true;
                 //проверка на блокировку по 2 гармонике
                 if (blocking(blkdiff[i] / diffCurrent[i])) {
