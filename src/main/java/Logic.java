@@ -9,52 +9,37 @@ public class Logic {
     private double beginingDiffCurrent; //Id0
     private double beginingDragCurrent; //It0
     private double coefDrag; //kt
-    private boolean block_2harmonic = false;
     private double[] currentDrag = new double[3];
 
     public void setVectors() {
         for (int i = 0; i < 3; i++) {
+            //диф ток по 1 гармонике
             diffCurrent[i] = getsumm(i * 5, vectors.getCosFirst(), vectors.getSinFirst());
+            //диф ток по 2 гармонике, для блокировки
             blkdiff[i] = getsumm(i * 5, vectors.getCosSecond(), vectors.getSinSecond());
         }
+        //запуск логики
         protect();
 
     }
 
     private void protect() {
-        boolean blk = false;
-        boolean str = false;
-        boolean trip = false;
         for (int i = 0; i < 3; i++) {
-//            blk = blk | blocking(blkdiff[i] / diffCurrent[i]);
             //It
             currentDrag[i] = getCurrentDrag(i * 5, vectors.getCosFirst(), vectors.getSinFirst());
             if (diffCurrent[i] > coefDrag * (currentDrag[i] - beginingDragCurrent) + beginingDiffCurrent) {
                 od.setStr(true);
+                //проверка на блокировку по 2 гармонике
                 if (blocking(blkdiff[i] / diffCurrent[i])) {
                     od.setBlk(false);
                     od.setTripper(true);
-                    System.out.println(blkdiff[i] + " 2 harmonic");
-                    System.out.println(diffCurrent[i] + " 1 harmonic");
-                    System.out.println(blkdiff[i] / diffCurrent[i] + " not blocking");
                 } else {
                     od.setBlk(true);
-                    System.out.println(blkdiff[i] + " --------------2 harmonic");
-                    System.out.println(diffCurrent[i] + "------------ 1 harmonic");
-                    System.out.println(blkdiff[i] / diffCurrent[i] + "--------------------------blocking");
                 }
             }
         }
+        //прием дискретных сигналов от логики
         od.takeDiscreteSignals();
-
-//        if (trip) {
-//            time = time + timeStep;
-//            if (time > setTime) {
-//                block_2harmonic = false;
-//                od.forEach(e -> e.setTripper(true));
-//                time = 0;
-//            }
-//        }
 
     }
 
@@ -105,11 +90,6 @@ public class Logic {
         this.beginingDiffCurrent = beginingDiffCurrent;
     }
 
-
-    public boolean isBlock_2harmonic() {
-        return block_2harmonic;
-    }
-
     public void setBeginingDragCurrent(double beginingDragCurrent) {
         this.beginingDragCurrent = beginingDragCurrent;
     }
@@ -117,6 +97,7 @@ public class Logic {
     public void setCoefDrag(double coefDrag) {
         this.coefDrag = coefDrag;
     }
+
     public double[] getCurrentDrag() {
         return currentDrag;
     }

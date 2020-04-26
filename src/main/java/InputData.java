@@ -49,12 +49,12 @@ public class InputData {
             chartsDiscrete.setTimeStep(step);
             //генерируем серии для токов
             String fun;
-            for (int i = 0; i < 2*numbers+2; i++) {
+            for (int i = 0; i < 2 * numbers + 2; i++) {
                 if (i < 5) {
                     fun = "М. зн." + (i + 1); //"Мгн. значение " +i+"-ого фидера"
                 } else if (i < 10) {
                     fun = "Д. зн. " + (i - 4); //"Действ. значение " +i+"-ого фидера"
-                } else if (i < 11){
+                } else if (i < 11) {
                     fun = "Диф. ток";
                 } else {
                     fun = "Торм. ток";
@@ -155,7 +155,7 @@ public class InputData {
                         //отсылка векторов в логику, если токи есть
                         if (!t) logic.setVectors();
                         //отключение (прекращение цикла(для имитации отключения), так как произошло срабатывание, выключатели отключены)
-                        breakers.forEach(e-> t=t|(!e.isState()));
+                        breakers.forEach(e -> t = t | (!e.isState()));
                         //диф ток пофазно
                         chartss.addAnalogData(2 * numbers, 0, logic.getDiffCurrent()[0]);
                         chartss.addAnalogData(2 * numbers, 1, logic.getDiffCurrent()[1]);
@@ -180,6 +180,7 @@ public class InputData {
 
 
     }
+
     // функция для преобразования boolean -> int
     public int boolToInt(boolean b) {
         return Boolean.compare(b, false);
