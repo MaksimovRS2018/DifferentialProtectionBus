@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="db38a8a1-8b76-4e7d-849d-d7e87f0a1dfd" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="D:\education\Algoritms\differentialProtection" />
+        <option value="D:\education\Algoritms\differentialProtection\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1auEPfJFcxrhagu2hakKzpj8kls" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="differentialProtection" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="db38a8a1-8b76-4e7d-849d-d7e87f0a1dfd" name="Default Changelist" comment="" />
+      <created>1587577055436</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1587577055436</updated>
+    </task>
+    <task id="LOCAL-00001" summary="version 23.04">
+      <created>1587665845268</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1587665845268</updated>
+    </task>
+    <task id="LOCAL-00002" summary="version 23.04">
+      <created>1587677445527</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1587677445527</updated>
+    </task>
+    <task id="LOCAL-00003" summary="version 24.04 (logic + outputData)">
+      <created>1587763749766</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1587763749766</updated>
+    </task>
+    <task id="LOCAL-00004" summary="version 25.04 доработанный файл&#10;вывод 2 графиков отдельно">
+      <created>1587846135063</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1587846135063</updated>
+    </task>
+    <task id="LOCAL-00005" summary="version 26.04 доработанный файл">
+      <created>1587852897425</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1587852897425</updated>
+    </task>
+    <task id="LOCAL-00006" summary="version 26.04 &#10;надо доработать блокировку, выдержку времени и блокировку вывести в outputData(may be)">
+      <created>1587855425343</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1587855425343</updated>
+    </task>
+    <task id="LOCAL-00007" summary="version 26.04 &#10;доработал блокировку, блокировку, пуск и срабатывание вывел в outputData&#10;имитация отключения происходит по контролю состояния выключателей">
+      <created>1587910182935</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1587910182935</updated>
+    </task>
+    <task id="LOCAL-00008" summary="добавил коментариев">
+      <created>1587910590334</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1587910590334</updated>
+    </task>
+    <task id="LOCAL-00009" summary="добавил коментариев, конечный файл">
+      <created>1587910959506</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1587910959506</updated>
+    </task>
+    <task id="LOCAL-00010" summary="изменил в logic формирование дискретных сигналов!">
+      <created>1587912304344</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1587912304344</updated>
+    </task>
+    <task id="LOCAL-00011" summary="изменил в logic формирование дискретных сигналов!&#10;Также в логике добавил проверку на отсутствие блокировки ( но это не обязательно)">
+      <created>1587912669603</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1587912669603</updated>
+    </task>
+    <task id="LOCAL-00012" summary="В логике нашел ошибку, там должна использоваться функция getCurrentDrag">
+      <created>1587912746349</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1587912746349</updated>
+    </task>
+    <task id="LOCAL-00013" summary="ранее в комите про блокировку писал">
+      <created>1587912783284</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1587912783284</updated>
+    </task>
+    <task id="LOCAL-00014" summary="в Logic подправил формирование тормозного тока">
+      <created>1587913023590</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1587913023590</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Конечный файл + отчет с рисунками">
+      <created>1587915044217</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1587915044217</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Конечный файл + отчет с рисунками">
+      <created>1587915131427</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1587915131427</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="version 23.04" />
+    <MESSAGE value="version 24.04 (logic + outputData)" />
+    <MESSAGE value="version 25.04 доработанный файл&#10;вывод 2 графиков отдельно" />
+    <MESSAGE value="version 26.04 доработанный файл" />
+    <MESSAGE value="version 26.04 &#10;надо доработать блокировку, выдержку времени и блокировку вывести в outputData(may be)" />
+    <MESSAGE value="version 26.04 &#10;доработал блокировку, блокировку, пуск и срабатывание вывел в outputData&#10;имитация отключения происходит по контролю состояния выключателей" />
+    <MESSAGE value="добавил коментариев" />
+    <MESSAGE value="добавил коментариев, конечный файл" />
+    <MESSAGE value="изменил в logic формирование дискретных сигналов!" />
+    <MESSAGE value="изменил в logic формирование дискретных сигналов!&#10;Также в логике добавил проверку на отсутствие блокировки ( но это не обязательно)" />
+    <MESSAGE value="В логике нашел ошибку, там должна использоваться функция getCurrentDrag" />
+    <MESSAGE value="ранее в комите про блокировку писал" />
+    <MESSAGE value="в Logic подправил формирование тормозного тока" />
+    <MESSAGE value="Конечный файл + отчет с рисунками" />
+    <option name="LAST_COMMIT_MESSAGE" value="Конечный файл + отчет с рисунками" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="552" y="179" key="#Project_Structure" timestamp="1587763546910">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="179" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1587763546910" />
+    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1587909251522">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1587909251522" />
+    <state x="594" y="114" key="CommitChangelistDialog2" timestamp="1587917631413">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="594" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587917631413" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1587824382200">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1587824382200" />
+    <state x="808" y="414" key="Github.ShareDialog" timestamp="1587655788188">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="808" y="414" key="Github.ShareDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1587655788188" />
+    <state x="708" y="225" key="Github.UntrackedFilesDialog" timestamp="1587655794484">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="708" y="225" key="Github.UntrackedFilesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1587655794484" />
+    <state width="1877" height="113" key="GridCell.Tab.0.bottom" timestamp="1587915046865">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="369" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1587643720156" />
+    <state width="1877" height="113" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1587915046865" />
+    <state width="1877" height="113" key="GridCell.Tab.0.center" timestamp="1587915046865">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="369" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1587643720156" />
+    <state width="1877" height="113" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1587915046865" />
+    <state width="1877" height="113" key="GridCell.Tab.0.left" timestamp="1587915046864">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="369" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1587643720155" />
+    <state width="1877" height="113" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1587915046864" />
+    <state width="1877" height="113" key="GridCell.Tab.0.right" timestamp="1587915046865">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="369" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1587643720156" />
+    <state width="1877" height="113" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1587915046865" />
+    <state width="1877" height="113" key="GridCell.Tab.1.bottom" timestamp="1587915046865">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="369" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1587643720949" />
+    <state width="1877" height="113" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1587915046865" />
+    <state width="1877" height="113" key="GridCell.Tab.1.center" timestamp="1587915046865">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="369" key="GridCell.Tab.1.center/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1587643720948" />
+    <state width="1877" height="113" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1587915046865" />
+    <state width="1877" height="113" key="GridCell.Tab.1.left" timestamp="1587915046865">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="369" key="GridCell.Tab.1.left/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1587643720948" />
+    <state width="1877" height="113" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1587915046865" />
+    <state width="1877" height="113" key="GridCell.Tab.1.right" timestamp="1587915046865">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="369" key="GridCell.Tab.1.right/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1587643720949" />
+    <state width="1877" height="113" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1587915046865" />
+    <state x="440" y="95" key="SettingsEditor" timestamp="1587910980229">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="95" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1587910980229" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1587915145058">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587915145058" />
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1587577059086">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1587577059086" />
+    <state x="685" y="226" key="new project wizard" timestamp="1587645680787">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="685" y="226" key="new project wizard/0.0.1920.1040/-1920.0.1536.824@0.0.1920.1040" timestamp="1587641195082" />
+    <state x="685" y="226" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1587645680787" />
+    <state x="666" y="149" key="refactoring.ChangeSignatureDialog" timestamp="1587764387561">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="666" y="149" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1587764387561" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1587768658396">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1587768658396" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1587826305684">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1587826305684" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((InputData)this).sv4" custom="InputData" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
