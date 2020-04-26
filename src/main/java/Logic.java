@@ -34,7 +34,7 @@ public class Logic {
                 str = str | true;
                 //проверка на блокировку по 2 гармонике
                 if (blocking(blkdiff[i] / diffCurrent[i])) {
-                    blk = false;
+                    blk = blk | false;
                     trip = trip | true;
                 } else {
                     blk = blk | true;
