@@ -73,7 +73,9 @@ public class InputData {
             chartsDiscrete.createAnalogChart("trip", 2);
             chartsDiscrete.addSeries("Blk", 2, 0);
 
+
             logic.setVectors(vectors);
+            //уставки для логики
             logic.setBlkSecondHarmonic(0.15);
             logic.setOd(od);
             logic.setBeginingDiffCurrent(1.082);
