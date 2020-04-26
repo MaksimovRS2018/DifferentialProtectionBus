@@ -64,19 +64,15 @@ public class InputData {
                 chartss.addSeries("Фаза B", i, 1);
                 chartss.addSeries("Фаза С", i, 2);
             }
-            //генерируем серии для дискретных значений
-//            for (int i = 0; i < 3; i++) {
+
+
             chartsDiscrete.createAnalogChart("trip", 0);
             chartsDiscrete.addSeries("Trip", 0, 0);
             chartsDiscrete.createAnalogChart("Str", 1);
             chartsDiscrete.addSeries("Str", 1, 0);
             chartsDiscrete.createAnalogChart("trip", 2);
             chartsDiscrete.addSeries("Blk", 2, 0);
-//            }
-//            chartsDiscrete.createAnalogChart("Blk", numbers);
-//            chartsDiscrete.addSeries("Blk", numbers, 0);
 
-            // уставки для ДЗШ забиваем в логику
             logic.setVectors(vectors);
             logic.setBlkSecondHarmonic(0.15);
             logic.setOd(od);
@@ -135,13 +131,18 @@ public class InputData {
                                 sv.get(i).setPhB(0.);
                                 sv.get(i).setPhC(0.);
                             }
+                            //вывод мгновенных значений
                             chartss.addAnalogData(i, 0, sv.get(i).getPhA());
                             chartss.addAnalogData(i, 1, sv.get(i).getPhB());
                             chartss.addAnalogData(i, 2, sv.get(i).getPhC());
                             b = b + 3; //чтобы прыгать через фазы для следующего фидера
-                            filter.get(i).setSv(sv.get(i));//объект SV помещаем в объект filter,чтобы получать значения
-                            filter.get(i).setRms(rms.get(i));//объект rms помещаем в объект filter,чтобы устанавливать значения
-                            filter.get(i).calculate(); //расчет ортогональных составляющих
+                            //объект SV помещаем в объект filter,чтобы получать значения
+                            filter.get(i).setSv(sv.get(i));
+                            //объект rms помещаем в объект filter,чтобы устанавливать значения
+                            filter.get(i).setRms(rms.get(i));
+                            //расчет ортогональных составляющих
+                            filter.get(i).calculate();
+                            //вывод средних значений
                             chartss.addAnalogData(i + 5, 0, rms.get(i).getPhA());
                             chartss.addAnalogData(i + 5, 1, rms.get(i).getPhB());
                             chartss.addAnalogData(i + 5, 2, rms.get(i).getPhC());
@@ -151,9 +152,9 @@ public class InputData {
                             i++;
                         }
 
-                        //отсылка векторов в логику
+                        //отсылка векторов в логику, если токи есть
                         if (!t) logic.setVectors();
-                        //отключение (прекращение цикла(для имитации отключения), так как произошло срабатывание)
+                        //отключение (прекращение цикла(для имитации отключения), так как произошло срабатывание, выключатели отключены)
                         breakers.forEach(e-> t=t|(!e.isState()));
                         //диф ток пофазно
                         chartss.addAnalogData(2 * numbers, 0, logic.getDiffCurrent()[0]);
@@ -163,11 +164,11 @@ public class InputData {
                         chartss.addAnalogData(2 * numbers + 1, 0, logic.getCurrentDrag()[0]);
                         chartss.addAnalogData(2 * numbers + 1, 1, logic.getCurrentDrag()[1]);
                         chartss.addAnalogData(2 * numbers + 1, 2, logic.getCurrentDrag()[2]);
+                        //вывод дискретных значений
+                        //сигнал блокировки (преобразование boolean -> int)
                         chartsDiscrete.addAnalogData(0, 0, boolToInt(od.getTripper()));
                         chartsDiscrete.addAnalogData(1, 0, boolToInt(od.getStr()));
                         chartsDiscrete.addAnalogData(2, 0, boolToInt(od.isBlk()));
-                        //сигнал блокировки (преобразование boolean -> int)
-//                        chartsDiscrete.addAnalogData(5, 0, boolToInt(logic.isBlock_2harmonic()));
                     }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
