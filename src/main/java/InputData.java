@@ -16,9 +16,10 @@ public class InputData {
     private ArrayList<SampleValues> sv = new ArrayList<SampleValues>();
     private ArrayList<RMSValues> rms = new ArrayList<RMSValues>();
     private ArrayList<Fourie> filter = new ArrayList<Fourie>();
-    private ArrayList<OutputData> od = new ArrayList<OutputData>();
+    private OutputData od = new OutputData();
+    private ArrayList<Breaker> breakers = new ArrayList<Breaker>();
     private Vector vectors = new Vector();
-    private boolean t = true;
+    private boolean t = false;
     private Logic logic = new Logic();
 
 
@@ -37,7 +38,7 @@ public class InputData {
             filter.get(i).set();
             filter.get(i).setVector(vectors);
             filter.get(i).setPeriod(period);
-            od.add(new OutputData());
+            breakers.add(new Breaker());
         }
         try {
             //объект класса Charts для построения графика токов в отдельном окне
@@ -64,13 +65,16 @@ public class InputData {
                 chartss.addSeries("Фаза С", i, 2);
             }
             //генерируем серии для дискретных значений
-            for (int i = 0; i < numbers; i++) {
-                chartsDiscrete.createAnalogChart("Trip" + (i + 1), i);
-                chartsDiscrete.addSeries("Trip" + (i + 1), i, 0);
-                chartsDiscrete.addSeries("Str" + (i + 1), i, 1);
-            }
-            chartsDiscrete.createAnalogChart("Blk", numbers);
-            chartsDiscrete.addSeries("Blk", numbers, 0);
+//            for (int i = 0; i < 3; i++) {
+            chartsDiscrete.createAnalogChart("trip", 0);
+            chartsDiscrete.addSeries("Trip", 0, 0);
+            chartsDiscrete.createAnalogChart("Str", 1);
+            chartsDiscrete.addSeries("Str", 1, 0);
+            chartsDiscrete.createAnalogChart("trip", 2);
+            chartsDiscrete.addSeries("Blk", 2, 0);
+//            }
+//            chartsDiscrete.createAnalogChart("Blk", numbers);
+//            chartsDiscrete.addSeries("Blk", numbers, 0);
 
             // уставки для ДЗШ забиваем в логику
             logic.setVectors(vectors);
@@ -79,7 +83,10 @@ public class InputData {
             logic.setBeginingDiffCurrent(1.082);
             logic.setCoefDrag(0.6);
             logic.setBeginingDragCurrent(0.9);
-            logic.setSetTime(0.04);
+
+            od.setBreakers(breakers);
+            od.setSetTime(0.04);
+            od.setTimeStep(step);
 
             //путь к файлам comtrade
             comtradeName = nameFile;
@@ -119,7 +126,7 @@ public class InputData {
                         int b = 0;
                         int i = 0;
                         while (i < numbers) { //проходимся по всем фидерам
-                            if (t) {
+                            if (!t) {
                                 sv.get(i).setPhA(Double.parseDouble(lineData[b + 2]) * k1[b] + k2[b]);
                                 sv.get(i).setPhB(Double.parseDouble(lineData[b + 3]) * k1[b + 1] + k2[b + 1]);
                                 sv.get(i).setPhC(Double.parseDouble(lineData[b + 4]) * k1[b + 2] + k2[b + 2]);
@@ -145,15 +152,9 @@ public class InputData {
                         }
 
                         //отсылка векторов в логику
-                        logic.setVectors();
-                        for (int j = 0; j < numbers;j++) {
-                            //сигнал срабатывания защиты
-                            chartsDiscrete.addAnalogData(j, 0, boolToInt(od.get(j).getTripper()));
-                            //сигнал пуска защиты
-                            chartsDiscrete.addAnalogData(j, 1, boolToInt(od.get(j).getStr()));
-                        }
+                        if (!t) logic.setVectors();
                         //отключение (прекращение цикла(для имитации отключения), так как произошло срабатывание)
-                        t = t & (!od.get(0).getTripper());
+                        breakers.forEach(e-> t=t|(!e.isState()));
                         //диф ток пофазно
                         chartss.addAnalogData(2 * numbers, 0, logic.getDiffCurrent()[0]);
                         chartss.addAnalogData(2 * numbers, 1, logic.getDiffCurrent()[1]);
@@ -162,8 +163,11 @@ public class InputData {
                         chartss.addAnalogData(2 * numbers + 1, 0, logic.getCurrentDrag()[0]);
                         chartss.addAnalogData(2 * numbers + 1, 1, logic.getCurrentDrag()[1]);
                         chartss.addAnalogData(2 * numbers + 1, 2, logic.getCurrentDrag()[2]);
+                        chartsDiscrete.addAnalogData(0, 0, boolToInt(od.getTripper()));
+                        chartsDiscrete.addAnalogData(1, 0, boolToInt(od.getStr()));
+                        chartsDiscrete.addAnalogData(2, 0, boolToInt(od.isBlk()));
                         //сигнал блокировки (преобразование boolean -> int)
-                        chartsDiscrete.addAnalogData(5, 0, boolToInt(logic.isBlock_2harmonic()));
+//                        chartsDiscrete.addAnalogData(5, 0, boolToInt(logic.isBlock_2harmonic()));
                     }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {

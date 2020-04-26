@@ -5,16 +5,12 @@ public class Logic {
     private double[] blkdiff = new double[3];
     private double blkSecondHarmonic;
     private Vector vectors;
-    private ArrayList<OutputData> od;
+    private OutputData od;
     private double beginingDiffCurrent; //Id0
     private double beginingDragCurrent; //It0
     private double coefDrag; //kt
     private boolean block_2harmonic = false;
-    private double time;
     private double[] currentDrag = new double[3];
-    private double timeStep = 0.001;
-    private double setTime = 0.02;
-    private boolean go;
 
     public void setVectors() {
         for (int i = 0; i < 3; i++) {
@@ -27,36 +23,38 @@ public class Logic {
 
     private void protect() {
         boolean blk = false;
+        boolean str = false;
         boolean trip = false;
         for (int i = 0; i < 3; i++) {
-            blk = blk | blocking(blkdiff[i] / diffCurrent[i]);
+//            blk = blk | blocking(blkdiff[i] / diffCurrent[i]);
             //It
             currentDrag[i] = getCurrentDrag(i * 5, vectors.getCosFirst(), vectors.getSinFirst());
             if (diffCurrent[i] > coefDrag * (currentDrag[i] - beginingDragCurrent) + beginingDiffCurrent) {
-
-                if (blk) {
-                    od.forEach(e -> e.setStr(true));
-                    block_2harmonic = blk;
+                od.setStr(true);
+                if (blocking(blkdiff[i] / diffCurrent[i])) {
+                    od.setBlk(false);
+                    od.setTripper(true);
                     System.out.println(blkdiff[i] + " 2 harmonic");
                     System.out.println(diffCurrent[i] + " 1 harmonic");
                     System.out.println(blkdiff[i] / diffCurrent[i] + " not blocking");
-                    trip = true;
                 } else {
+                    od.setBlk(true);
                     System.out.println(blkdiff[i] + " --------------2 harmonic");
                     System.out.println(diffCurrent[i] + "------------ 1 harmonic");
                     System.out.println(blkdiff[i] / diffCurrent[i] + "--------------------------blocking");
                 }
             }
         }
+        od.takeDiscreteSignals();
 
-        if (trip) {
-            time = time + timeStep;
-            if (time > setTime) {
-                block_2harmonic = false;
-                od.forEach(e -> e.setTripper(true));
-                time = 0;
-            }
-        }
+//        if (trip) {
+//            time = time + timeStep;
+//            if (time > setTime) {
+//                block_2harmonic = false;
+//                od.forEach(e -> e.setTripper(true));
+//                time = 0;
+//            }
+//        }
 
     }
 
@@ -99,7 +97,7 @@ public class Logic {
         this.blkSecondHarmonic = blkSecondHarmonic;
     }
 
-    public void setOd(ArrayList<OutputData> od) {
+    public void setOd(OutputData od) {
         this.od = od;
     }
 
@@ -123,12 +121,5 @@ public class Logic {
         return currentDrag;
     }
 
-    public void setTimeStep(double timeStep) {
-        this.timeStep = timeStep;
-    }
-
-    public void setSetTime(double setTime) {
-        this.setTime = setTime;
-    }
 
 }
