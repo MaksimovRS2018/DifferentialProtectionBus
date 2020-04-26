@@ -12,7 +12,8 @@ public class OutputData {
     private ArrayList<Breaker> breakers = new ArrayList<Breaker>();
 
     public void takeDiscreteSignals() {
-        if (trip) { //если срабатывание, то проходим выдержку времени (20-40 миллисекунд, чтобы удостовериться)
+
+        if (trip & !blk) { //если срабатывание, то проходим выдержку времени (20-40 миллисекунд, чтобы удостовериться)
             time = time + timeStep;
             if (time > setTime) { //проверка на выдержку времени
                 breakers.forEach(e -> e.setState(false)); // приваиваем значение false для состояния выключателей
