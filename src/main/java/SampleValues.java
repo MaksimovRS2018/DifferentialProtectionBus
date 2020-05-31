@@ -3,19 +3,19 @@ public class SampleValues {
     private double phB;
     private double phC;
 
-    public double get(int phasa){
-        if (phasa==1)
-            return  getPhA();
-        if (phasa==2) {
-            return getPhB();
-        }
-        if (phasa==3) {
-            return getPhC();
-        } else {
-            return 0;
-        }
-
-    }
+//    public double get(int phasa){
+//        if (phasa==1)
+//            return  getPhA();
+//        if (phasa==2) {
+//            return getPhB();
+//        }
+//        if (phasa==3) {
+//            return getPhC();
+//        } else {
+//            return 0;
+//        }
+//
+//    }
 
     public double getPhA() {
         return phA;

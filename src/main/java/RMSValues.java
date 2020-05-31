@@ -3,13 +3,13 @@ public class RMSValues {
     private double phB;
     private double phC;
 
-    public void set(int phasa, double value){
-
-        if (phasa==1) setPhA(value);
-        if (phasa==2) setPhB(value);
-        if (phasa==3) setPhC(value);
-
-    }
+//    public void set(int phasa, double value){
+//
+//        if (phasa==1) setPhA(value);
+//        if (phasa==2) setPhB(value);
+//        if (phasa==3) setPhC(value);
+//
+//    }
 
     public double getPhA() {
         return phA;
